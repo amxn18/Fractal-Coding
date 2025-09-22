@@ -145,3 +145,4 @@ if __name__ == "__main__":
         sys.exit(1)
     demo(sys.argv[1])
 
+# python improved_hybrid_aes_hyperchaos.py input_color.png
