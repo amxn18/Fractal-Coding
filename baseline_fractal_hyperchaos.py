@@ -176,6 +176,9 @@ if __name__ == "__main__":
         sys.exit(1)
     demo(sys.argv[1])
 
-# python baseline_fractal_hyperchaos.py imageName.png
+#python baseline_fractal_hyperchaos.py monkey.png
+# 
+
+
 
 

@@ -306,3 +306,12 @@ if __name__ == "__main__":
     else:
         usage()
         sys.exit(1)
+
+
+
+# Encoding
+
+
+# Decoding
+#python fractal_with_hyperchaos.py decode out.enc mypassword recon.png
+
