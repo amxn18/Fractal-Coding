@@ -1,0 +1,41 @@
+\begin{algorithm}[H]
+\caption{Baseline Fractal Compression with Hyperchaotic Encryption}
+\KwIn{Grayscale Image $I$ of size $H \times W$, Password $P$}
+\KwOut{Fractal code $C$, Encrypted image $E$, Decrypted image $D$, Reconstructed image $R$}
+
+\textbf{Step 1: Preprocessing}\\
+Convert $I$ to grayscale if required; normalize pixels to $[0,255]$.\\
+
+\textbf{Step 2: Fractal Compression}\\
+Divide $I$ into range blocks of size $b \times b$.\\
+Generate domain blocks of size $(2b)\times(2b)$ with step size $s$.\\
+Downsample each domain block to match range block size.\\
+\ForEach{range block $R$}{
+  Compare $R$ with all domain blocks $D$.\\
+  Estimate affine parameters $s, o$ such that $R \approx s \cdot D + o$.\\
+  Store mapping $(R_{coord}, D_{coord}, s, o)$.\\
+}
+Collect all mappings to form fractal code $C$.\\
+
+\textbf{Step 3: Fractal Decompression}\\
+Initialize blank canvas $R$.\\
+\For{$k=1$ \KwTo $iter$}{
+  Apply stored mappings on canvas: downsample domain, apply affine $(s,o)$, and update range block.\\
+}
+Obtain reconstructed image $R$.\\
+
+\textbf{Step 4: Hyperchaotic Encryption}\\
+Derive seeds $(x_0,y_0)$ from password $P$.\\
+Generate hyperchaotic sequence using logistic maps:
+$x_{n+1}=r_1x_n(1-x_n),\; y_{n+1}=r_2y_n(1-y_n)$.\\
+Use sequence to form permutation indices and keystream.\\
+Shuffle pixel positions and XOR with keystream to get encrypted image $E$.\\
+
+\textbf{Step 5: Decryption}\\
+Regenerate sequence using password $P$.\\
+Apply XOR decryption and inverse permutation to obtain decrypted image $D$.\\
+
+\textbf{Step 6: Evaluation}\\
+Compute MSE/PSNR between $I$ and $D$.\\
+Verify quality of reconstructed image $R$.\\
+\end{algorithm}

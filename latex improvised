@@ -1,0 +1,39 @@
+\begin{algorithm}[H]
+\caption{Improvised Variable Grid DCT with AES-GCM and Hyperchaotic Encryption}
+\KwIn{Image $I$ (Grayscale or RGB), Password $P$}
+\KwOut{Compressed coefficients $C$, Encrypted image $E$, Decrypted image $D$, Reconstructed image $R$}
+
+\textbf{Step 1: Variable Grid Partition}\\
+Compute horizontal and vertical standard deviations: $sh \gets std(I,h)$, $sv \gets std(I,v)$.\\
+Obtain gradients $gh \gets diff(sv)$, $gw \gets diff(sh)$.\\
+Select top-$T$ peaks for horizontal and vertical edges.\\
+Merge neighboring intervals to define adaptive block sizes.\\
+Partition $I$ into sub-blocks $SP$ using the adaptive grid.\\
+
+\textbf{Step 2: Block DCT Compression}\\
+\ForEach{sub-block $B \in SP$}{
+  Apply 2D Discrete Cosine Transform (DCT).\\
+  Quantize coefficients with factor $q$.\\
+  Store compressed coefficients $C$.\\
+}
+
+\textbf{Step 3: Hybrid Encryption}\\
+Derive AES-GCM key from password $P$ using PBKDF2.\\
+Serialize compressed coefficients and apply AES-GCM encryption.\\
+Generate hyperchaotic sequence $(x_n, y_n)$ using coupled logistic maps.\\
+Use sequence to permute ciphertext bytes $\rightarrow$ Encrypted image $E$.\\
+
+\textbf{Step 4: Decryption}\\
+Apply inverse hyperchaotic permutation on $E$.\\
+Decrypt using AES-GCM with password $P$ to recover coefficients $C$.\\
+
+\textbf{Step 5: Reconstruction}\\
+\ForEach{compressed block $C_i$}{
+  Apply inverse DCT using quantization factor $q$.\\
+  Place block back into its original position.\\
+}
+Combine all blocks to obtain reconstructed image $R$.\\
+
+\textbf{Step 6: Evaluation}\\
+Compare $R$ with original $I$ using PSNR, SSIM, and file size ratio.\\
+\end{algorithm}
